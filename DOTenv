@@ -1,0 +1,15 @@
+##### BINDID #####
+CLIENT_ID=<BindID_client_ID>
+CLIENT_SECRET=<BindID_client_secret>
+REDIRECT_URL=https://localhost:3000/redirect.html
+REDIRECT_URL2=https://localhost:3000/redirect2.html
+
+##### OKTA #####
+OKTA_DOMAIN=<Okta_base_URL_hostname>
+OKTA_API_TOKEN=<Okta_API_token>
+OKTA_GROUP_BIND=<Okta_group_ID>
+OKTA_DEFAULT_PASSWD=<Default_user_password>
+
+### MAIL ### Simplifies testing using mail aliases
+MAIL_USERNAME=<>
+MAIL_DOMAIN=<>
