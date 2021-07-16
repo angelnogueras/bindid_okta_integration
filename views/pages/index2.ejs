@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <meta name="xm-bind-id-client_id" content="<%=client_id%>">
+  <meta name="xm-bind-id-redirect_uri" content="<%=redirect_uri%>">
+
+  <!--
+  <meta name="xm-bind-id-nonce" content="">
+  <meta name="xm-bind-id-state" content="">
+  <meta name="xm-bind-id-scope" content="bindid_network_info email phone">
+  <meta name="xm-bind-id-verifications" content="phone email">
+  <meta name="xm-bind-id-custom_message" content="Login using Your RP">
+  <meta name="xm-bind-id-aux_link" content="https://your-rp.example.com/more">
+  <meta name="xm-bind-id-aux_link_title" content="More ways to verify">
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CPromise.prototype.finally%2CTextDecoder%2CTextEncoder%2CObject.entries"></script>
+  <script src="https://signin.bindid-sandbox.io/bindid-sdk/transmit-bind-id-sdk.js" defer></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>Enroll existing user with BindID</h1>
+    <h2>Create User</h2>
+    <p>
+      First, a new user (with password) is created in Okta and activated
+    </p>
+    <form>
+      <input type="text" id="username" name="username" placeholder="Your username">
+      <button id="btn_create" class="btn btn-primary">Create Okta User</button>
+      <p>ID: <span id="user_id"></span></p>
+      <p>Login: <span id="user_login"></span></p>
+    </form>
+
+    <h2>Enroll in BindID and Update Okta</h2>
+    <p>
+      Now it's time to
+      <ul>
+        <li>Enroll user in BindID</li>
+        <li>Set and bindid_alias for the user in BindID</li>
+        <li>Associate the bindid_alias in Okta</li>
+        <li>Add user to a specific group in Okta (users in this group make use BindID to authenticate)</li>
+      </ul>
+    </p>
+    <button class="xm-bind-id-button btn btn-primary" disabled>Enrollment with BindID and update Okta</button>
+
+  </div>
+
+  <script>
+    window.addEventListener('load', _ => {
+
+      const username = document.getElementById('username');
+      const user_id = document.getElementById('user_id');
+      const user_login = document.getElementById('user_login');
+      document.getElementById('btn_create').addEventListener('click', e => {
+        e.preventDefault();
+        fetch(`/create_user_okta?username=${username.value}`).then(r => r.json())
+        .then(data => {
+
+          console.log(data);
+          user_id.innerHTML = data.user_id;
+          user_login.innerHTML = data.user_login;
+          document.querySelector('.xm-bind-id-button').disabled = false;
+
+        }).catch(data => {
+          console.error(data);
+        });
+      }); 
+
+    });
+  </script>
+  
+</body>
+</html>

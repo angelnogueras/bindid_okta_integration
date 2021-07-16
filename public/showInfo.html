@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Info</title>
+
+  <style>
+  * { margin: 0; }
+  pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; background-color: #232930; color: #BBB}
+  .string { color: green; }
+  .number { color: darkorange; }
+  .boolean { color: blue; }
+  .null { color: magenta; }
+  .key { color: #CC3333; }
+  
+  #img_body {
+      width: 100%;
+  }
+  </style>
+</head>
+<body>
+
+  <div id="datadiv"></div>
+  <script>
+    function syntaxHighlight(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+  </script>
+  <script>
+    window.addEventListener('load', evt => {
+      const datadiv = document.getElementById('datadiv');
+
+      /* Show Token info */
+      fetch(`/token_info`).then(r => r.json()).then(data => {
+        console.log('code sent');
+        datadiv.innerHTML = `<pre>${syntaxHighlight(JSON.stringify(data, undefined, 2))}</pre>`;
+      });
+
+    });
+  </script>
+  
+</body>
+</html>

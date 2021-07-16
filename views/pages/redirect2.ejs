@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect</title>
+
+  <meta name="xm-bind-id-client_id" content="<%=client_id%>">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CPromise.prototype.finally"></script>
+  <script src="https://signin.bindid-sandbox.io/bindid-sdk/transmit-bind-id-sdk.js" defer></script>
+
+</head>
+<body>
+  <script>
+    window.addEventListener('load', evt => {
+      const datadiv = document.getElementById('datadiv');
+
+      function sendAuthCodeToServer(authCode) {
+        const urlParams = new URLSearchParams(window.location.search);
+        window.location.replace(
+          `/token_exchange_page2?code=${urlParams.get('code')}`);
+      }
+
+      function handleError(err) {
+        datadiv.innerHTML = `<p style="color:red">ERROR: ${JSON.stringify(err)}</p>`;
+      }
+      
+      window.XmBindId.processRedirectResponse()
+        .then(res => { sendAuthCodeToServer(res.code); }, err => { handleError(err); })
+    });
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <meta name="xm-bind-id-client_id" content="<%=client_id%>">
+  <meta name="xm-bind-id-redirect_uri" content="<%=redirect_uri%>">
+
+  <!--
+  <meta name="xm-bind-id-nonce" content="">
+  <meta name="xm-bind-id-state" content="">
+  <meta name="xm-bind-id-scope" content="bindid_network_info email phone">
+  <meta name="xm-bind-id-verifications" content="phone email">
+  <meta name="xm-bind-id-custom_message" content="Login using Your RP">
+  <meta name="xm-bind-id-aux_link" content="https://your-rp.example.com/more">
+  <meta name="xm-bind-id-aux_link_title" content="More ways to verify">
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CPromise.prototype.finally%2CTextDecoder%2CTextEncoder%2CObject.entries"></script>
+  <script src="https://signin.bindid-sandbox.io/bindid-sdk/transmit-bind-id-sdk.js" defer></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>Full Enrollment with BindID and Okta</h1>
+    <p>
+      The process:
+      <ul>
+        <li>Creates a user in Okta Directory</li>
+        <li>Enrolls the user in BindID</li>
+        <li>Links BindID and Okta for the user</li>
+      </ul>
+    </p>
+    <button class="xm-bind-id-button btn btn-primary">Let's go</button>
+  </div>
+  
+</body>
+</html>
