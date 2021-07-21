@@ -18,16 +18,16 @@ app.use(express.urlencoded({extended: true}));
 
 // Session
 app.use(session({
-  secret: 'keyboard cat is too simple', 
-  saveUninitialized: false, 
-  resave: false,  
+  secret: 'keyboard cat is too simple',
+  saveUninitialized: false,
+  resave: false,
   rolling: false,  // "true" sends cookie every response -> expiration is reset
-  cookie: { 
+  cookie: {
     //domain: `${process.env.HOSTNAME}`,
     sameSite: 'lax',
     maxAge: 5 * 60 * 1000, // 5 minutes
     secure: true,
-  }, 
+  },
 }));
 
 
@@ -75,7 +75,7 @@ app.get('/token_info', async (req, res) => {
   let dataUI = null;
   try {
     dataUI = await bindIdService.userInfo(access_token);
-  } 
+  }
   catch (error) {
     return res.send({"message": "error retrieving userInfo"});
   }
@@ -97,7 +97,7 @@ app.get('/token_info', async (req, res) => {
   catch (err) {
     // InvalidTokenError
     console.error(err);
-    res.end({
+    res.send({
       "message": "ups, this is embarrasing",
       "error": err
     });
